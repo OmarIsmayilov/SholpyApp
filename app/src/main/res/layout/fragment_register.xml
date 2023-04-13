@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.RegisterFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/ibBack"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/back_arrow"></ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Sign up"
+            android:textColor="@color/textColor"
+            android:textSize="35sp"></TextView>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.16" />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Name"
+                android:textColor="@color/textColor"
+                android:textSize="19sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="340dp"
+                android:layout_height="70dp"
+                android:background="@drawable/et_bg"
+                android:gravity="center_vertical"
+                android:hint="John Doe"
+                android:textColor="@color/textColor"
+                android:inputType="textPersonName"
+                android:paddingStart="20dp"
+                android:textColorHint="@color/hintText"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:fontFamily="@font/montserrat"
+                android:text="E-mail"
+                android:textColor="@color/textColor"
+                android:textSize="19sp"></TextView>
+
+
+                <EditText
+                    android:id="@+id/etRegEmail"
+                    android:layout_width="340dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/et_bg"
+                    android:gravity="center_vertical"
+                    android:hint="example@gmail.com"
+                    android:textColor="@color/textColor"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="20dp"
+                    android:textColorHint="@color/hintText" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Password"
+                android:textColor="@color/textColor"
+                android:textSize="19sp">
+
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/etRegPass"
+                android:layout_width="340dp"
+                android:layout_height="70dp"
+                android:background="@drawable/et_bg"
+                android:hint="********"
+                android:textSize="18sp"
+                android:textColor="@color/textColor"
+                android:inputType="textPassword"
+                android:paddingStart="20dp"
+                android:textColorHint="@color/hintText" />
+
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSignUp"
+            android:layout_width="340dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="45dp"
+            android:background="@drawable/btn_bg"
+            android:elevation="7dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Sign up"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/blueMain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/signupmessage"></ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/fbLogin"
+                android:layout_width="150dp"
+                android:layout_height="65dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/fbsignin"></ImageButton>
+
+            <ImageButton
+                android:id="@+id/googleLogin"
+                android:layout_width="150dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/googlesignin"></ImageButton>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/already_have_an_account_sign_in"
+            android:textColor="@color/textColor">
+
+        </TextView>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="66dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

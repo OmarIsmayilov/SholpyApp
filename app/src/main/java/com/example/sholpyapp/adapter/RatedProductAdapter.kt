@@ -1,0 +1,43 @@
+package com.example.sholpyapp.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
+import com.example.sholpyapp.databinding.ProductItemBinding
+import com.example.sholpyapp.databinding.RatedProductItemBinding
+import com.example.sholpyapp.model.AllProductsResponseItem
+import com.example.sholpyapp.ui.fragments.HomeFragmentDirections
+import com.squareup.picasso.Picasso
+
+class RatedProductAdapter : RecyclerView.Adapter<RatedProductAdapter.ratedProductHolder>(){
+    private var productsList : ArrayList<AllProductsResponseItem> = arrayListOf()
+
+    inner class ratedProductHolder(val binding: RatedProductItemBinding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ratedProductHolder {
+        val layout = RatedProductItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ratedProductHolder(layout)
+    }
+
+    override fun getItemCount(): Int {
+        return productsList.size
+    }
+
+    override fun onBindViewHolder(holder: ratedProductHolder, position: Int) {
+        val product = productsList[position]
+        with(holder.binding){
+            Picasso.get().load(product.image).into(sivProd)
+            tvName.text = product.title
+            btnBuyNow.setOnClickListener { Navigation.findNavController(it).navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(product)) }
+        }
+    }
+
+    fun updateList(newList : ArrayList<AllProductsResponseItem>){
+        productsList.clear()
+        productsList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+
+}

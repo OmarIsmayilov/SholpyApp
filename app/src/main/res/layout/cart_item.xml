@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="140dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="30dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/card_bg">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/sivProd2"
+        android:layout_width="118dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="10dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+        app:srcCompat="@drawable/ic_launcher_background">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <TextView
+        android:id="@+id/tvName2"
+        android:layout_width="201dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="10dp"
+        android:ems="3"
+        android:fontFamily="@font/montserrat_medium"
+        android:maxLines="2"
+        android:text=""
+        android:textColor="@color/textColor"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/sivProd2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPrice2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text=""
+        android:textColor="@color/textColor"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ibDec"
+        app:layout_constraintStart_toEndOf="@+id/sivProd2"
+        app:layout_constraintTop_toTopOf="@+id/ibDec"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/card_bg"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="center"
+        android:padding="3dp"
+        android:textColor="@color/textColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibInc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="@+id/tvQuantity"
+        app:layout_constraintStart_toEndOf="@+id/tvQuantity"
+        app:layout_constraintTop_toTopOf="@+id/tvQuantity" />
+
+    <ImageButton
+        android:id="@+id/ibDec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/baseline_horizontal_rule_24"
+        app:layout_constraintBottom_toBottomOf="@+id/tvQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/tvQuantity"
+        app:layout_constraintTop_toTopOf="@+id/tvQuantity" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

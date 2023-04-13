@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.AccountFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/framely"
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivProfil"
+            android:layout_width="110dp"
+            android:layout_height="105dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:background="@drawable/et_selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+        <View
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/baseline_edit_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="2dp"
+            >
+
+        </View>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/ibBack"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/back_arrow"></ImageButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Account details"
+            android:textColor="@color/textColor"
+            android:textSize="28sp"
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSave"
+        android:layout_width="340dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="92dp"
+        android:background="@drawable/btn_bg"
+        android:elevation="7dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Update"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/blueMain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </com.google.android.material.button.MaterialButton>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lyPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="78dp"
+            android:visibility="gone"
+            app:passwordToggleEnabled="true"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChange"
+            app:startIconDrawable="@drawable/outline_back_hand_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCPass"
+                android:layout_width="330dp"
+                android:inputType="textPassword"
+                android:layout_height="60dp"
+                android:textColor="@color/textColor"
+                android:enabled="true"
+                android:hint="New password" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Change password"
+            android:textColor="@color/purple_200"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.432"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/framely">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lyName"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:endIconCheckable="true"
+            app:endIconDrawable="@drawable/baseline_edit_24"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:startIconDrawable="@drawable/baseline_person_outline_24"
+            tools:layout_editor_absoluteY="206dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:hint="Name" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:endIconCheckable="true"
+            app:endIconDrawable="@drawable/baseline_edit_24"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:startIconDrawable="@drawable/baseline_alternate_email_24"
+            tools:layout_editor_absoluteY="206dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:hint="Email" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.fredporciuncula.phonemoji.PhonemojiTextInputLayout
+            android:id="@+id/lyNumber"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconDrawable="@drawable/baseline_edit_24"
+            app:endIconCheckable="true"
+            app:endIconMode="custom"
+            android:hint="Phone number"
+            >
+
+            <com.fredporciuncula.phonemoji.PhonemojiTextInputEditText
+                android:id="@+id/etCNumber"
+                android:enabled="false"
+                android:inputType="phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:phonemoji_initialRegionCode="AZ"
+                />
+        </com.fredporciuncula.phonemoji.PhonemojiTextInputLayout>
+
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
