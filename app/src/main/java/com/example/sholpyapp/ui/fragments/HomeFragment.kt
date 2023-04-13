@@ -62,7 +62,6 @@ class HomeFragment : Fragment() {
             )
         )
     }
-
     private fun setTheme() {
 
         with(binding) {
@@ -97,7 +96,7 @@ class HomeFragment : Fragment() {
     private fun checkAuth() {
         val uid = sp.getString("uid", null)
         val fUid = FirebaseAuth.getInstance().currentUser
-        if (uid != null && fUid!=null ) {
+        if (uid != null && fUid != null) {
             setTheme()
             binding.rvProducts.adapter = pAdapter
             binding.rvRatedProducts.adapter = rAdapter
@@ -111,12 +110,12 @@ class HomeFragment : Fragment() {
         pb = binding.progressBar2
         dialog(true)
         val uid = FirebaseAuth.getInstance().currentUser?.uid
-        if (uid!=null){
+        if (uid != null) {
             db.collection("users").document(uid.toString()).get().addOnSuccessListener {
                 val user = it.toObject(User::class.java)
                 Picasso.get().load(user?.photoUrl).into(binding.ivProfil)
             }.addOnFailureListener {
-                Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -171,7 +170,6 @@ class HomeFragment : Fragment() {
             pb.visibility = View.INVISIBLE
         }
     }
-
 
 
 }
