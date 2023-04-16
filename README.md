@@ -35,7 +35,7 @@
 
 | Detail | Detail |
 | ------ | ---- |
-|<img src="https://github.com/OmarIsmayilov/SholpyApp/blob/master/Screens/Splash.png" width="250" height="500"/>|<img src="https://github.com/OmarIsmayilov/SholpyApp/blob/master/Screens/dSplash.png" width="250" height="500"/>
+|<img src="https://github.com/OmarIsmayilov/SholpyApp/blob/master/Screens/detail.png" width="250" height="500"/>|<img src="https://github.com/OmarIsmayilov/SholpyApp/blob/master/Screens/ddetail.png" width="250" height="500"/>
 
 | Wishlist | Wishlist |
 | ------ | ---- |
