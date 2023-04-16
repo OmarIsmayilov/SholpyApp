@@ -47,7 +47,7 @@
 
 | Profile | Profile |
 | ------ | ---- |
-|<img src="https://github.com/OmarIsmayilov/SholpyApp/blob/master/Screens/profile.png" width="250" height="500"/>|<img src="https://github.com/OmarIsmayilov/SholpyApp/blob/master/Screens/dprofile.png" width="250" height="500"/>
+|<img src="https://github.com/OmarIsmayilov/SholpyApp/blob/master/Screens/profil.png" width="250" height="500"/>|<img src="https://github.com/OmarIsmayilov/SholpyApp/blob/master/Screens/dprofil.png" width="250" height="500"/>
 
 | Account details | Account details |
 | ------ | ---- |
