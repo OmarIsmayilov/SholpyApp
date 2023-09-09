@@ -10,7 +10,9 @@ import androidx.navigation.ui.NavigationUI
 import com.example.sholpyapp.R
 import com.example.sholpyapp.adapter.CartAdapter
 import com.example.sholpyapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var  binding : ActivityMainBinding
 

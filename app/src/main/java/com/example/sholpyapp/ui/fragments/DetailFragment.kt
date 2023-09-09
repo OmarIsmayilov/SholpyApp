@@ -1,99 +1,100 @@
 package com.example.sholpyapp.ui.fragments
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.sholpyapp.base.BaseFragment
 import com.example.sholpyapp.databinding.FragmentDetailBinding
 import com.example.sholpyapp.model.AllProductsResponseItem
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.picasso.Picasso
+import com.example.sholpyapp.model.CartItem
+import com.example.sholpyapp.model.WishlistItem
+import com.example.sholpyapp.viewmodel.DetailViewModel
+import com.example.sholpyapp.utils.Extensions.loadUrl
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import kotlin.properties.Delegates
 
-class DetailFragment : Fragment() {
+@AndroidEntryPoint
+class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
 
-    private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
+    private val viewModel: DetailViewModel by viewModels()
+    private var model : AllProductsResponseItem?=null
     private val args: DetailFragmentArgs by navArgs()
-    private val db = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
-    private var pId by Delegates.notNull<Int>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val product = args.product
-        pId = product.id!!
-
-        setFav(pId)
-        setData(product)
-
-
-    }
-
-    private fun setFav(id: Int?) {
-        val q = db.collection("wishlist").whereEqualTo("id", id)
-        q.get().addOnSuccessListener { snapshot ->
-            if (!snapshot.isEmpty) {
-                binding.cbFav.isChecked = true
-            }
-        }
-    }
-
-    private fun removeFav(id: Int?) {
-        db.collection("wishlist").document(id.toString()).delete()
-    }
-
-    private fun addFav(product: AllProductsResponseItem, id: Int?) {
-        db.collection("wishlist").document(id.toString()).set(product)
-    }
-
-    private fun setData(product: AllProductsResponseItem) {
+    override fun observeEvents() {
         with(binding) {
-            ibBack.setOnClickListener { findNavController().popBackStack() }
-            cbFav.setOnCheckedChangeListener { compoundButton, b ->
-                if (b) {
-                    addFav(product, pId)
-                } else {
-                    removeFav(pId)
+            viewModel.productData.observe(viewLifecycleOwner) {
+                it?.let {
+                    product = it
+                    model = it
+                    ivProduct.loadUrl(it.image)
                 }
             }
-            btnAddCart.setOnClickListener { addtoCart(product) }
-            tvPrice.text = "$ ${product.price}"
-            tvProductDescription.text = product.description
-            tvProductName.text = product.title
-            Picasso.get().load(product.image).into(ivProduct)
+            viewModel.loading.observe(viewLifecycleOwner){
+                binding.progressBar9.visibility = if (it) View.VISIBLE else View.GONE
+            }
         }
     }
 
-    private fun addtoCart(product: AllProductsResponseItem) {
-        if (auth.currentUser!=null){
-            db.collection("carts").document(auth.currentUser!!.uid)
-                    .collection("products").document(product.id.toString()).set(product)
-                    .addOnSuccessListener {
-                        Toast.makeText(context,"Added to cart",Toast.LENGTH_SHORT).show() }
-                    .addOnFailureListener {
-                        Toast.makeText(context,it.localizedMessage,Toast.LENGTH_SHORT).show() }
+    override fun onCreateFinish() {
+        val id = args.id
+        viewModel.getProductById(id)
+
+
+    }
+
+    override fun setupListeners() {
+        with(binding) {
+            ibBack.setOnClickListener { findNavController().popBackStack() }
+            cbFav.setOnCheckedChangeListener { _, b ->
+                if (b){
+                    viewModel.addToWishlist( WishlistItem(
+                        model!!.id,
+                        model!!.category!!,
+                        model!!.description!!,
+                        model!!.image!!,
+                        model!!.price!!,
+                        model!!.title!!,
+                        model!!.quantity))
+                }else{
+                    viewModel.deleteFromWishlist( WishlistItem(
+                        model!!.id,
+                        model!!.category!!,
+                        model!!.description!!,
+                        model!!.image!!,
+                        model!!.price!!,
+                        model!!.title!!,
+                        model!!.quantity))
+                }
+            }
+
+            btnAddCart.setOnClickListener {
+                model?.let {
+                    val item = CartItem(
+                        model!!.id,
+                        model!!.category!!,
+                        model!!.description!!,
+                        model!!.image!!,
+                        model!!.price!!,
+                        model!!.title!!,
+                        model!!.quantity
+                    )
+                    viewModel.addToCart(
+                        item, "1"
+                    )
+                    Timber.tag(TAG).e("$item ")
+
+                }
+               }
+
         }
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
 
-    }
 
 }

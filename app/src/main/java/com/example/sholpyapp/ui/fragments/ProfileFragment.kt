@@ -8,47 +8,49 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.sholpyapp.R
+import com.example.sholpyapp.base.BaseFragment
 import com.example.sholpyapp.databinding.FragmentProfileBinding
 import com.example.sholpyapp.model.User
+import com.example.sholpyapp.viewmodel.LoginViewModel
+import com.example.sholpyapp.utils.Extensions.loadUrl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class ProfileFragment : Fragment() {
+@AndroidEntryPoint
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
-    private var _binding : FragmentProfileBinding?=null
-    private val binding get() = _binding!!
-    private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
-    private lateinit var sp : SharedPreferences
+    @Inject
+    lateinit var sp : SharedPreferences
+    private val viewModel : LoginViewModel by viewModels()
+    override fun observeEvents() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProfileBinding.inflate(inflater,container,false)
-        return binding.root
     }
 
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        sp = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE)
-        binding.btnAccount.setOnClickListener { findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAccountFragment()) }
-        binding.btnEdit.setOnClickListener { findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAccountFragment()) }
+    override fun onCreateFinish() {
         setName()
         setTheme()
     }
+
+    override fun setupListeners() {
+        binding.btnAccount.setOnClickListener { findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAccountFragment()) }
+        binding.btnEdit.setOnClickListener { findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAccountFragment()) }
+
+    }
+
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+
 
     private fun setName() {
         val uid = auth.currentUser?.uid.toString()
         db.collection("users").document(uid).get().addOnSuccessListener {
             val user = it.toObject(User::class.java)
-            Picasso.get().load(user?.photoUrl).into(binding.shapeableImageView)
+            binding.shapeableImageView.loadUrl(user?.photoUrl)
         }
         auth.currentUser?.let {
             db.collection("users").document(it.uid).get().addOnSuccessListener {
@@ -66,9 +68,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun signOut() {
-        auth.signOut()
-        sp.edit().putString("uid",null).apply()
+        deleteSession()
+        viewModel.signOutUser()
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToSplashFragment())
+    }
+
+    private fun deleteSession() {
+        sp.edit().putBoolean("session",false).apply()
     }
 
     private fun setTheme() {
@@ -96,9 +102,6 @@ class ProfileFragment : Fragment() {
         binding.switchTheme.setText("Dark")
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
 
 }

@@ -1,0 +1,58 @@
+--------------Sholpy----------------
+Status : Progress
+Expire date : 13.04.23
+------------------------------------
+
+
+----------------09.04.23----------------
++Dark/Light theme
++CartFragment design in xml
++CategoriesFragment design in xml
++Design detail fragment 
++Create & design product_item
++Create & design rated_product_item
++Create & design category_item
++Write categoryAdapter 
++get api data with retrofit
++Write RatedProductsAdapter
++Write AllProductsAdapter
++Launch retrofit & write interface with model classes for rated product
++design categoryproduct
++Go to categoryProduct fragment when clicked on category item in adapter
++add firebase as wishlist in detailfragment
++add firebase as wishlist in homefragment
++design wishlistfragment
++cart item design
++write adapter for cart and wishlist
++show products in wishlishFragment
++Change profile photo in homefragment
+----------------------------------------
+
+
+---------------10.04.23-----------------
++filter ucun ayri fragment yarat ,homefragmentde view all a basanda ora getsin
++filter edende getsin filter product fragment e ve recycleview yenilensin
++add pr. dialog in each of fragments 
+-set search in every fragments
++filter with bottom sheet in productbyvategoryfragment
++can change profil photo f.e. avatar list adapter 
++save profilphotoimage uri in firebase
++fakeapi site - cart add and show
++configure cart fragmnent(add cart) with firebase
++remove product in cartfragment with swipe(youtube)
++can change quantity of product into cart
++show items in cart 
+------setprice in cart fragment
++can change profil informations
+-alert dialog 
+-login fragmentdeki passswordu deyis textinput layout ele widgth la
+-databasde cart.wishlistleri users in icinde getir 
+-send link to email for to change the user email
+-notification with firebase 
++get user info with extends variation
+----------------------------------------
+
+
+users>uid>	info -> set user model
+		carts -> product id ->product model
+		wishlist -> product id ->product model

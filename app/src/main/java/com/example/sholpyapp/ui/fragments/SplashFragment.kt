@@ -1,5 +1,6 @@
 package com.example.sholpyapp.ui.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,26 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.sholpyapp.R
+import com.example.sholpyapp.base.BaseFragment
 import com.example.sholpyapp.databinding.FragmentSplashBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import kotlin.math.log
 
-class SplashFragment : Fragment() {
-    private var _binding : FragmentSplashBinding?=null
-    private val binding get() = _binding!!
+@AndroidEntryPoint
+class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentSplashBinding.inflate(inflater,container,false)
-        return binding.root
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+    override fun observeEvents() {
+
     }
 
+    override fun onCreateFinish() {
+        checkAuth()
+    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        with(binding){
+    override fun setupListeners() {
+        with(binding) {
             btnSignUp.setOnClickListener {
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToRegisterFragment2())
             }
@@ -34,12 +36,13 @@ class SplashFragment : Fragment() {
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())
             }
         }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun checkAuth() {
+        val login = sharedPreferences.getBoolean("session",false)
+        if(login){
+          findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
+        }
     }
 
 

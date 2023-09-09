@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "SholpyApp"
 include ':app'
+include ':@androidx.hilt:hilt-compiler'
+

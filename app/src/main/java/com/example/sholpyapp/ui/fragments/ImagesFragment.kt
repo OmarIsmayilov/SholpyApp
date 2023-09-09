@@ -19,8 +19,9 @@ import com.google.android.gms.tasks.Tasks
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ImagesFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentImagesBinding? = null

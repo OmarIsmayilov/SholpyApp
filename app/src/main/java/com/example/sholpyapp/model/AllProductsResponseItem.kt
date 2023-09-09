@@ -2,25 +2,27 @@ package com.example.sholpyapp.model
 
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.sql.Timestamp
 
 @Parcelize
 data class AllProductsResponseItem(
-    @SerializedName("category")
-    val category: String?=null,
-    @SerializedName("description")
-    val description: String?=null,
     @SerializedName("id")
-    val id: Int?=null,
+    var id: Int,
+    @SerializedName("category")
+    var category: String?,
+    @SerializedName("description")
+    var description: String?,
     @SerializedName("image")
-    val image: String?=null,
+    var image: String?,
     @SerializedName("price")
-    var price: Double?=null,
+    var price: Double?,
     @SerializedName("rating")
-    val rating: Rating?=null,
+    var rating: Rating,
     @SerializedName("title")
-    val title: String?=null,
-    val quantity : Int =1,
-) : Parcelable
+    var title: String?,
+    var quantity : Int ,
+) : Parcelable {}

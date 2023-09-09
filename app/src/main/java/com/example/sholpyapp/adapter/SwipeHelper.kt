@@ -15,7 +15,6 @@ abstract class SwipeHelper : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LE
     val deleteIcon = com.example.sholpyapp.R.drawable.baseline_delete_outline_24
     val deleteColor = Color.RED
 
-
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,

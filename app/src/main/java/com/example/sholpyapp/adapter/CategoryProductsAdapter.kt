@@ -7,16 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sholpyapp.databinding.ProductItemBinding
 import com.example.sholpyapp.model.AllProductsResponseItem
 import com.example.sholpyapp.ui.fragments.CategoryProductFragmentDirections
-import com.example.sholpyapp.ui.fragments.HomeFragmentDirections
-import com.squareup.picasso.Picasso
+import com.example.sholpyapp.utils.Extensions.loadUrl
 
-class CategoryProductsAdapter : RecyclerView.Adapter<CategoryProductsAdapter.productCHolder>(){
-    private var productsList : ArrayList<AllProductsResponseItem> = arrayListOf()
+class CategoryProductsAdapter : RecyclerView.Adapter<CategoryProductsAdapter.productCHolder>() {
+    private var productsList = arrayListOf<AllProductsResponseItem>()
+    var onClick: (AllProductsResponseItem) -> Unit = {}
 
-    inner class productCHolder(val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class productCHolder(val binding: ProductItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): productCHolder {
-        val layout = ProductItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val layout = ProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return productCHolder(layout)
     }
 
@@ -24,7 +25,7 @@ class CategoryProductsAdapter : RecyclerView.Adapter<CategoryProductsAdapter.pro
         return productsList.size
     }
 
-    fun setFilteredList(newProductList: ArrayList<AllProductsResponseItem>){
+    fun setFilteredList(newProductList: ArrayList<AllProductsResponseItem>) {
         this.productsList = newProductList
         notifyDataSetChanged()
     }
@@ -32,19 +33,19 @@ class CategoryProductsAdapter : RecyclerView.Adapter<CategoryProductsAdapter.pro
     override fun onBindViewHolder(holder: productCHolder, position: Int) {
         val product = productsList[position]
 
-        with(holder.binding){
+        with(holder.binding) {
             tvName.text = product.title
-            tvPrice.text = "$ ${product.price}"
-            Picasso.get().load(product.image).into(shapeableImageView)
-            ibAdd.setOnClickListener { Navigation.findNavController(it).navigate(
-                CategoryProductFragmentDirections.actionCategoryProductFragmentToDetailFragment(product)) }
+            tvPrice.text = product.price.toString()
+            shapeableImageView.loadUrl(product.image)
+            ibAdd.setOnClickListener {
+                onClick(product)
+            }
+
         }
     }
 
 
-
-
-    fun updateList(newList : ArrayList<AllProductsResponseItem>){
+    fun updateList(newList: ArrayList<AllProductsResponseItem>) {
         productsList.clear()
         productsList.addAll(newList)
         notifyDataSetChanged()

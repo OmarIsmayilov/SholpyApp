@@ -1,19 +1,16 @@
 package com.example.sholpyapp.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sholpyapp.databinding.ProductItemBinding
 import com.example.sholpyapp.model.AllProductsResponseItem
-import com.example.sholpyapp.ui.fragments.HomeFragmentDirections
-import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.picasso.Picasso
+import com.example.sholpyapp.utils.Extensions.loadUrl
 
 class ProductsAdapter  : RecyclerView.Adapter<ProductsAdapter.productHolder>(){
-    private var productsList : ArrayList<AllProductsResponseItem> = arrayListOf()
-
+    var onClick : (Int) -> Unit = {}
     inner class productHolder(val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): productHolder {
@@ -22,28 +19,41 @@ class ProductsAdapter  : RecyclerView.Adapter<ProductsAdapter.productHolder>(){
     }
 
     override fun getItemCount(): Int {
-        return productsList.size
+        return differ.currentList.size
     }
 
     override fun onBindViewHolder(holder: productHolder, position: Int) {
-        val product = productsList[position]
+        val product = differ.currentList[position]
 
         with(holder.binding){
             tvName.text = product.title
             tvPrice.text = "$ ${product.price}"
-            Picasso.get().load(product.image).into(shapeableImageView)
-            ibAdd.setOnClickListener { Navigation.findNavController(it).navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(product)) }
+            shapeableImageView.loadUrl(product.image)
+            ibAdd.setOnClickListener {
+                onClick(product.id)
+            }
         }
     }
 
+     val differ = AsyncListDiffer(this,difUtilCallBack)
+    object difUtilCallBack : DiffUtil.ItemCallback<AllProductsResponseItem>(){
+        override fun areItemsTheSame(
+            oldItem: AllProductsResponseItem,
+            newItem: AllProductsResponseItem,
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
 
+        override fun areContentsTheSame(
+            oldItem: AllProductsResponseItem,
+            newItem: AllProductsResponseItem,
+        ): Boolean {
+            return oldItem == newItem
+        }
 
-
-    fun updateList(newList : ArrayList<AllProductsResponseItem>){
-        productsList.clear()
-        productsList.addAll(newList)
-        notifyDataSetChanged()
     }
+
+
 
 
 }

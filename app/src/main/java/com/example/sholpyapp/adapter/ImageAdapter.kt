@@ -9,11 +9,11 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sholpyapp.databinding.ImageItemBinding
 import com.example.sholpyapp.ui.fragments.ImagesFragmentDirections
+import com.example.sholpyapp.utils.Extensions.loadUrl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.picasso.Picasso
 
-class ImageAdapter() : RecyclerView.Adapter<ImageAdapter.imageHolder>()  {
+class ImageAdapter : RecyclerView.Adapter<ImageAdapter.imageHolder>()  {
     private val imageList = arrayListOf<Uri>()
     private val db = FirebaseFirestore.getInstance()
     inner class imageHolder(val binding : ImageItemBinding): RecyclerView.ViewHolder(binding.root)
@@ -29,7 +29,7 @@ class ImageAdapter() : RecyclerView.Adapter<ImageAdapter.imageHolder>()  {
 
     override fun onBindViewHolder(holder: imageHolder, position: Int) {
         val image = imageList[position]
-        Picasso.get().load(image.toString()).into(holder.binding.ivImage)
+        holder.binding.ivImage.loadUrl(image.toString())
         with(holder.binding){
             btnSelect.setOnClickListener {view->
                 savePhoto(image.toString())

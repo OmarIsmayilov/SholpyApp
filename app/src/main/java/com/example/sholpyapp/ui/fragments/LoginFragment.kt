@@ -2,6 +2,7 @@ package com.example.sholpyapp.ui.fragments
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
@@ -10,98 +11,99 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.sholpyapp.base.BaseFragment
 import com.example.sholpyapp.databinding.FragmentLoginBinding
+import com.example.sholpyapp.viewmodel.LoginViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.shashank.sony.fancytoastlib.FancyToast
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
+class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
-class LoginFragment : Fragment() {
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+    private val viewModel: LoginViewModel by viewModels()
+    override fun observeEvents() {
+        with(binding){
+            with(viewModel){
 
-    private var _binding : FragmentLoginBinding?=null
-    private val binding get() = _binding!!
-    private val auth = FirebaseAuth.getInstance()
+                loading.observe(viewLifecycleOwner){
+                    progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(inflater,container,false)
-        return binding.root
+                resultAuth.observe(viewLifecycleOwner) {
+                    it?.let {
+                        FancyToast.makeText(
+                            requireContext(),
+                            it.message,
+                            FancyToast.LENGTH_SHORT,
+                            if (it.success) FancyToast.SUCCESS else FancyToast.ERROR,
+                            false
+                        ).show()
+                        if (it.success) {
+                            setSession()
+                            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateFinish() {
 
+    }
+
+    override fun setupListeners() {
         with(binding) {
             tvSignUp.setOnClickListener { findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment2()) }
-            btnSignIn.setOnClickListener { validateData() }
+            btnSignIn.setOnClickListener { login() }
             ibBack.setOnClickListener { findNavController().popBackStack() }
         }
-
     }
 
-    private fun validateData() {
+
+    private fun validateData(email: String?, password: String?): Boolean {
+        return when {
+            email.isNullOrEmpty() -> false
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> false
+            password.isNullOrEmpty() -> false
+            else -> true
+        }
+    }
+
+
+    private fun login() {
         with(binding) {
             val email = etLoginEmail.text.toString().trim()
             val password = etLPass.text.toString().trim()
 
-
-            if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                snackbar("Enter valid email")
-                etLoginEmail.requestFocus()
-            } else if (password.isEmpty()) {
-                etLPass.requestFocus()
-                snackbar("Enter password")
-            } else {
-                signIn(email, password)
-                dialog(true)
+            if(validateData(email, password)){
+                viewModel.signIn(email, password)
+            }else{
+                FancyToast.makeText(
+                    requireContext(),
+                   "Fields cannot be empty",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
             }
         }
-    }
-
-    private fun signIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                saveToSp(auth.currentUser?.uid)
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-                dialog(false)
-            }
-            .addOnFailureListener {
-                it.localizedMessage?.let { it1 -> toast(it1) }
-                dialog(false)
-            }
-    }
-
-    private fun saveToSp(uid: String?) {
-        val sp = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE)
-        sp.edit().putString("uid",uid).apply()
-    }
-
-    private fun snackbar(message: String) {
-        val snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
-        snackbar.setBackgroundTint(Color.BLUE)
-        snackbar.setTextColor(Color.WHITE)
-        snackbar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_SLIDE
-        snackbar.show()
 
     }
-    private fun toast(message: String){
-        Toast.makeText(requireContext(),message, Toast.LENGTH_LONG).show()
-    }
-    private fun dialog(bool:Boolean){
-        val pb = binding.progressBar
-        if(bool){
-            pb.visibility = View.VISIBLE
-        }else{
-            pb.visibility = View.INVISIBLE
-        }
+
+
+    private fun setSession() {
+        sharedPreferences.edit().putBoolean("session", true).apply()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
 }

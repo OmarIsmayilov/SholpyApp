@@ -8,11 +8,11 @@ import com.example.sholpyapp.databinding.ProductItemBinding
 import com.example.sholpyapp.databinding.RatedProductItemBinding
 import com.example.sholpyapp.model.AllProductsResponseItem
 import com.example.sholpyapp.ui.fragments.HomeFragmentDirections
-import com.squareup.picasso.Picasso
+import com.example.sholpyapp.utils.Extensions.loadUrl
 
 class RatedProductAdapter : RecyclerView.Adapter<RatedProductAdapter.ratedProductHolder>(){
     private var productsList : ArrayList<AllProductsResponseItem> = arrayListOf()
-
+    var onClick : (Int) -> Unit = {}
     inner class ratedProductHolder(val binding: RatedProductItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ratedProductHolder {
@@ -25,11 +25,13 @@ class RatedProductAdapter : RecyclerView.Adapter<RatedProductAdapter.ratedProduc
     }
 
     override fun onBindViewHolder(holder: ratedProductHolder, position: Int) {
-        val product = productsList[position]
+        val item = productsList[position]
         with(holder.binding){
-            Picasso.get().load(product.image).into(sivProd)
-            tvName.text = product.title
-            btnBuyNow.setOnClickListener { Navigation.findNavController(it).navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(product)) }
+            sivProd.loadUrl(item.image)
+            product = item
+            btnBuyNow.setOnClickListener {
+                onClick(item.id)
+            }
         }
     }
 

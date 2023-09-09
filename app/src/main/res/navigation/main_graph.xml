@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -51,23 +51,19 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_splashFragment"
-            app:destination="@id/splashFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_categoryProductFragment"
-            app:destination="@id/categoryProductFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_filterProductFragment"
             app:destination="@id/filterProductFragment" />
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoryProductFragment"
+            app:destination="@id/categoryProductFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/registerFragment2"
         android:name="com.example.sholpyapp.ui.fragments.RegisterFragment"
@@ -99,31 +95,10 @@
             app:destination="@id/accountFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.example.sholpyapp.ui.fragments.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
-        <argument
-            android:name="product"
-            app:argType="com.example.sholpyapp.model.AllProductsResponseItem" />
-    </fragment>
-    <fragment
         android:id="@+id/wishlistFragment"
         android:name="com.example.sholpyapp.ui.fragments.WishlistFragment"
         android:label="fragment_wishlist"
         tools:layout="@layout/fragment_wishlist" />
-    <fragment
-        android:id="@+id/categoryProductFragment"
-        android:name="com.example.sholpyapp.ui.fragments.CategoryProductFragment"
-        android:label="fragment_category_product"
-        tools:layout="@layout/fragment_category_product" >
-        <argument
-            android:name="category"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_categoryProductFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
     <dialog
         android:id="@+id/filterFragment"
         android:name="com.example.sholpyapp.ui.fragments.FilterFragment"
@@ -143,6 +118,9 @@
         <action
             android:id="@+id/action_filterProductFragment_to_filterFragment"
             app:destination="@id/filterFragment" />
+        <action
+            android:id="@+id/action_filterProductFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -164,4 +142,25 @@
             app:popUpTo="@id/imagesFragment2"
             app:popUpToInclusive="true" />
     </dialog>
+    <fragment
+        android:id="@+id/categoryProductFragment"
+        android:name="com.example.sholpyapp.ui.fragments.CategoryProductFragment"
+        android:label="fragment_category_product"
+        tools:layout="@layout/fragment_category_product" >
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_categoryProductFragment_to_detailFragment2"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.sholpyapp.ui.fragments.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -1,112 +1,64 @@
 package com.example.sholpyapp.ui.fragments
 
-import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sholpyapp.R
-import com.example.sholpyapp.adapter.CartAdapter
 import com.example.sholpyapp.adapter.SwipeHelper
 import com.example.sholpyapp.adapter.WishlistAdapter
-import com.example.sholpyapp.databinding.FragmentLoginBinding
+import com.example.sholpyapp.base.BaseFragment
 import com.example.sholpyapp.databinding.FragmentWishlistBinding
 import com.example.sholpyapp.model.AllProductsResponseItem
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.sholpyapp.model.WishlistItem
+import com.example.sholpyapp.viewmodel.WishlistViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
-class WishlistFragment : Fragment() {
+@AndroidEntryPoint
+class WishlistFragment : BaseFragment<FragmentWishlistBinding>(FragmentWishlistBinding::inflate) {
 
-    private var _binding : FragmentWishlistBinding?=null
-    private val binding get() = _binding!!
-    private val db = FirebaseFirestore.getInstance()
-    private val wishList = arrayListOf<AllProductsResponseItem>()
-    private lateinit var wAdapter : WishlistAdapter
+    private var wishlistAdapter = WishlistAdapter()
+    private val viewModel: WishlistViewModel by viewModels()
+    override fun observeEvents() {
+        with(binding) {
+            with(viewModel) {
+                loading.observe(viewLifecycleOwner) {
+                    progressBar4.visibility = if (it) View.VISIBLE else View.GONE
+                }
+                wishlistData.observe(viewLifecycleOwner) {
+                    tvError.visibility = if (it.isEmpty())  View.VISIBLE else View.INVISIBLE
+                    rvWish.adapter = wishlistAdapter
+                    wishlistAdapter.differ.submitList(it as ArrayList<WishlistItem>)
+                }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentWishlistBinding.inflate(inflater,container,false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.btnClearAll.setOnClickListener {
-            dialog(true)
-            clearAllData() }
-        wAdapter = WishlistAdapter(requireContext())
-        binding.rvWish.adapter = wAdapter
-        dialog(true)
-        getDataFromFb()
-
-    }
-
-    private fun clearAllData() {
-        db.collection("wishlist").get().addOnSuccessListener {docs->
-            for (doc in docs){
-            doc.reference.delete()
             }
-            wishList.clear()
-            getDataFromFb()
         }
+    }
+
+    override fun onCreateFinish() {
 
     }
 
-    private fun getDataFromFb() {
-        db.collection("wishlist").get().addOnSuccessListener {docs->
-            for (doc in docs){
-                val product = doc.toObject(AllProductsResponseItem::class.java)
-                val item = AllProductsResponseItem(
-                    product.category,
-                    product.description,
-                    product.id,
-                    product.image,
-                    product.price,
-                    product.rating,
-                    product.title,
-                    product.quantity,
-                )
-                wishList.add(item)
-            }
-            wAdapter.updateList(wishList)
-            dialog(false)
+    override fun setupListeners() {
+        binding.btnClearAll.setOnClickListener { viewModel.deleteAllData() }
+
+        val swipeHelper = object : SwipeHelper() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                when (direction) {
+                    ItemTouchHelper.LEFT -> {
 
 
-
-            val swipeHelper = object  : SwipeHelper(){
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-                    when(direction){
-                        ItemTouchHelper.LEFT -> {
-                            wAdapter.deleteItem(viewHolder.adapterPosition)
-
-                        }
                     }
                 }
             }
-            val touchHelper = ItemTouchHelper(swipeHelper)
-            touchHelper.attachToRecyclerView(binding.rvWish)
-
         }
+        val touchHelper = ItemTouchHelper(swipeHelper)
+        touchHelper.attachToRecyclerView(binding.rvWish)
     }
 
-    private fun dialog(bool:Boolean){
-        val pb = binding.progressBar4
-        if(bool){
-            pb.visibility = View.VISIBLE
-        }else{
-            pb.visibility = View.INVISIBLE
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 
 }
+
+
+

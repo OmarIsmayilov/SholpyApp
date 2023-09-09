@@ -1,75 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="product"
+            type="com.example.sholpyapp.model.AllProductsResponseItem" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="315dp"
-        android:layout_height="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="wrap_content"
+        android:background="@drawable/et_bg"
+        android:layout_height="wrap_content">
 
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="Popular"
-            android:textColor="@color/textColor"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/sivProd"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="159dp"
-            android:layout_height="53dp"
-            android:layout_marginStart="14dp"
-            android:ems="3"
-            android:fontFamily="@font/montserrat_medium"
-            android:maxLines="2"
-            android:text="Product name"
-            android:textColor="@color/textColor"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/sivProd"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/sivProd"
-            android:layout_width="129dp"
-            android:layout_height="131dp"
-            android:layout_marginStart="9dp"
-            android:scaleType="fitXY"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="315dp"
+            android:layout_height="170dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
-            app:srcCompat="@drawable/ic_launcher_background">
+            app:layout_constraintTop_toTopOf="parent">
 
-        </com.google.android.material.imageview.ShapeableImageView>
 
-        <Button
-            android:id="@+id/btnBuyNow"
-            android:layout_width="99dp"
-            android:layout_height="39dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/btn_bg"
-            android:backgroundTint="@color/purple_700"
-            android:text="Buy now"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/sivProd" />
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Popular"
+                android:textColor="@color/textColor"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/sivProd"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:minLines="2"
+                android:ems="4"
+                android:maxLines="3"
+                android:padding="2dp"
+                android:text="@{product.title}"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/sivProd"
+                android:layout_width="140dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="9dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
+                app:srcCompat="@drawable/ic_launcher_background">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <Button
+                android:id="@+id/btnBuyNow"
+                android:layout_width="99dp"
+                android:layout_height="39dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/btn_bg"
+                android:backgroundTint="@color/purple_700"
+                android:text="Buy now"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView4" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

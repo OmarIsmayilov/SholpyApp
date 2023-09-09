@@ -1,53 +1,46 @@
 package com.example.sholpyapp.ui.fragments
 
-import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.sholpyapp.R
 import com.example.sholpyapp.adapter.CategoryProductsAdapter
-import com.example.sholpyapp.adapter.ProductsAdapter
-import com.example.sholpyapp.api.ApiUtils
+import com.example.sholpyapp.base.BaseFragment
 import com.example.sholpyapp.databinding.FragmentCategoryProductBinding
-import com.example.sholpyapp.databinding.FragmentDetailBinding
 import com.example.sholpyapp.model.AllProductsResponse
 import com.example.sholpyapp.model.AllProductsResponseItem
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class CategoryProductFragment : Fragment() {
-    private var _binding: FragmentCategoryProductBinding? = null
-    private val binding get() = _binding!!
+@AndroidEntryPoint
+class CategoryProductFragment : BaseFragment<FragmentCategoryProductBinding>(FragmentCategoryProductBinding::inflate) {
+
+    override fun observeEvents() {
+
+
+    }
+
+    override fun onCreateFinish() {
+        //dialog(true)
+        getData()
+    }
+
+    override fun setupListeners() {
+        cAdapter.onClick = {
+            findNavController().navigate(CategoryProductFragmentDirections.actionCategoryProductFragmentToDetailFragment2(it.id))
+        }
+    }
+
     private val args: CategoryProductFragmentArgs by navArgs()
-    private val utils = ApiUtils.getApi()
+    //private val utils = ApiUtils.getApi()
     private val cAdapter = CategoryProductsAdapter()
     private lateinit var searchView: SearchView
     private lateinit var productList: ArrayList<AllProductsResponseItem>
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentCategoryProductBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dialog(true)
-        getData()
-
-    }
 
     private fun getData() {
         val category = args.category
@@ -57,7 +50,7 @@ class CategoryProductFragment : Fragment() {
         binding.tvCategory.text = category.capitalize(Locale.ROOT)
         binding.rvProductC.adapter = cAdapter
         binding.ibBack.setOnClickListener { findNavController().popBackStack() }
-        setData(category)
+        //setData(category)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -92,7 +85,7 @@ class CategoryProductFragment : Fragment() {
     }
 
 
-    private fun setData(category: String) {
+   /* private fun setData(category: String) {
         utils.getProductbyCategory(category).enqueue(object : Callback<AllProductsResponse> {
             override fun onResponse(
                 call: Call<AllProductsResponse>,
@@ -106,7 +99,7 @@ class CategoryProductFragment : Fragment() {
                     }
                 }
             }
-
+*//*
             override fun onFailure(call: Call<AllProductsResponse>, t: Throwable) {
                 dialog(false)
                 Toast.makeText(requireContext(), t.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -123,8 +116,6 @@ class CategoryProductFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
+*/
 
 }

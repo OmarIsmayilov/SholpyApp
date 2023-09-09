@@ -57,56 +57,36 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="315dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="20dp"
-        android:elevation="8dp"
-        app:cardCornerRadius="30dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRatedProducts"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        tools:listitem="@layout/rated_product_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4">
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRatedProducts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="38dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="6dp"
-            app:layout_constraintEnd_toStartOf="@+id/rvRatedProducts" />
-
-
-    </androidx.cardview.widget.CardView>
 
     <RadioGroup
         android:id="@+id/rgCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="9dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintTop_toBottomOf="@+id/rvRatedProducts">
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/lyMen"
             android:layout_marginEnd="25dp"
             android:orientation="vertical">
 
@@ -114,20 +94,19 @@
                 android:id="@+id/ivMen"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/category_man"
-                android:background="@drawable/chip_bg" />
+                android:background="@drawable/chip_bg"
+                android:src="@drawable/category_man" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:textSize="13sp"
                 android:layout_marginTop="5dp"
-                android:text="Men"
-                android:gravity="center"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/montserrat_medium"
-                >
+                android:gravity="center"
+                android:text="Men"
+                android:textColor="@color/textColor"
+                android:textSize="13sp">
 
             </TextView>
         </LinearLayout>
@@ -136,25 +115,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
+            android:id="@+id/lyWomen"
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/ivWomen"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/category_woman"
-                android:background="@drawable/chip_bg" />
+                android:background="@drawable/chip_bg"
+                android:src="@drawable/category_woman" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:textSize="13sp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="center"
                 android:text="Women"
-                android:textColor="@color/textColor">
+                android:textColor="@color/textColor"
+                android:textSize="13sp">
 
             </TextView>
 
@@ -164,6 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
+            android:id="@+id/lyElectronics"
             android:orientation="vertical">
 
             <ImageButton
@@ -171,20 +152,19 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ct_electronics"
-                android:background="@drawable/chip_bg" />
+                android:background="@drawable/chip_bg"
+                android:src="@drawable/ct_electronics" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Electronics"
-                android:gravity="center"
                 android:layout_gravity="bottom|center"
-                android:textSize="13sp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/montserrat_medium"
-                >
+                android:gravity="center"
+                android:text="Electronics"
+                android:textColor="@color/textColor"
+                android:textSize="13sp">
 
             </TextView>
         </LinearLayout>
@@ -192,37 +172,35 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/lyJewellery"
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/ivJewelery"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/access"
-                android:background="@drawable/chip_bg" />
+                android:background="@drawable/chip_bg"
+                android:src="@drawable/access" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:textSize="13sp"
                 android:layout_marginTop="5dp"
-                android:text="Jewelery"
-                android:gravity="center"
-                android:textColor="@color/textColor"
                 android:fontFamily="@font/montserrat_medium"
-                >
+                android:gravity="center"
+                android:text="Jewelery"
+                android:textColor="@color/textColor"
+                android:textSize="13sp">
 
             </TextView>
         </LinearLayout>
 
 
-
-
-
     </RadioGroup>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="460dp"
         android:layout_marginTop="26dp"
@@ -287,5 +265,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.18" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        android:layout_width="46dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="#FFFFFF"
+        android:progressBackgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/rvRatedProducts"
+        app:layout_constraintEnd_toEndOf="@+id/rvRatedProducts"
+        app:layout_constraintStart_toStartOf="@+id/rvRatedProducts"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <ProgressBar
+        android:id="@+id/progressBar8"
+        android:layout_width="46dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rvRatedProducts"
+        app:layout_constraintStart_toStartOf="@+id/rvRatedProducts"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
